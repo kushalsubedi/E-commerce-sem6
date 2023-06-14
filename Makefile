@@ -16,6 +16,8 @@ installs:
 	cd src && pip install -r requirements.txt
 build-css:
 	npm run build:css
+collectstatic:
+	cd src && python manage.py collectstatic
 
 run:
 	@echo "!!!!! running Python server ... !!!!!"
