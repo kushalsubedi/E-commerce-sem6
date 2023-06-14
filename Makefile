@@ -1,15 +1,16 @@
-dev-init-windows:
+ifeq ($(OS),Windows_NT)
+dev-init:
 	virtualenv venv &&\
 	venv\Scripts\activate &&\
 	npm install -D tailwindcss &&\
 	cd src && pip install -r requirements.txt 
-
+else
 dev-init:
 	virtualenv venv &&\
-	source venv/bin/activate &&\
+	/bin/bash -c "source venv/bin/activate" &&\
 	npm install -D tailwindcss &&\
 	cd src && pip install -r requirements.txt 
-	
+endif
 
 installs:
 	npm install &&\
