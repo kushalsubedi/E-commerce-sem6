@@ -14,7 +14,7 @@ dev-init:
 installs:
 	npm install &&\
 	cd src && pip install -r requirements.txt
-build:
+build-css:
 	npm run build:css
 
 run:
