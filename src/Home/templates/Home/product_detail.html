@@ -1,0 +1,17 @@
+
+{% extends 'base.html'%}
+
+{%block content%}
+{% include 'nav.html'%}
+
+       <div class="container md-5">
+            <h1>{{ blog.name }}</h1> <span style="color:red"> @{{product.author}}</span>
+            <p> <img src = "{{product.image.url}}" width="300px">
+           
+             <blockquotes> <pre>{{ product.body }}</pre></blockquots>
+            <p>{{ product.pub_date }}</p>
+            </div>
+
+{%endblock%}
+    
+ 

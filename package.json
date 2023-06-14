@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "build:css": "tailwindcss --input src/static/staticfiles/tw/tailwind-input.css --output src/static/staticfiles/css/tailwind-output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.2"
+  },
+  "dependencies": {
+    "cd": "^0.3.3",
+    "src": "^1.1.2"
+  }
+}

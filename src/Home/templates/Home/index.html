@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'nav.html'%}
+<div class="container md-4 mt-4">
+<h1> welcome {{request.user.username}} </h1>
+    {% for product in product  %}
+   <div class="container">
+       <a href = "{% url 'product_detail' product.id %}"> <h1>
+        Name :{{ product.name }}</h1>  
+       <p style="color:red"> @{{ product.author }}</p>
+        <p> 
+          {% if product.image %}
+          <img src = "{{product.image.url}}" width="300px">
+          {% endif %}
+
+        </a>
+        <p>{{ product.pub_date_pretty}}</p>
+        
+        <pre>{{ product.summary }}</pre>
+        {% if request.user == product.author %}
+      
+      <a href="{% url  'update_product' product.id %}">   <button class="btn btn-secondary mr-5" value ="Edit"> Edit  </button> </a>
+
+      <a href="{% url  'delete_product' product.id %}">   <button class="btn btn-danger mr-5" value ="Delete"> Delete  </button> </a>
+
+
+   
+      {% endif %}
+    {% endfor %}
+        </div>
+  {% endblock %}
+        </div>
