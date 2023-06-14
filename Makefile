@@ -26,8 +26,10 @@ initial-push:
 	@echo "Enter your branch name: ";\
 	read branch_name ;\
 	git branch $$branch_name && git checkout $$branch_name &&\
-	git add . && git commit -m "update" && git push --set-upstream origin $$branch_name
+	git add . && git commit -m "initial-commit" && git push --set-upstream origin $$branch_name
 push:
-	git add . && git commit -m "update" && git push 
+	@echo "Enter your commit message seperated by _ ";\
+	read commit ;\
+	git add . && git commit -m $$commit && git push 
 
 
