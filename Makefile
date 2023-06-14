@@ -31,7 +31,3 @@ push:
 	git add . && git commit -m "update" && git push 
 
 
-do:
-	@echo "What is your age?: "; \
-    read AGE; \
-    echo "Your age is $$AGE"
