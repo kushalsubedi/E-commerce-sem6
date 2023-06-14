@@ -21,12 +21,15 @@ run:
 	@echo "!!!!! running Python server ... !!!!!"
 	cd src && python manage.py runserver
 
-push:
+initial-push:
 
 	@echo "Enter your branch name: ";\
 	read branch_name ;\
 	git branch $$branch_name && git checkout $$branch_name &&\
 	git add . && git commit -m "update" && git push --set-upstream origin $$branch_name
+push:
+	git add . && git commit -m "update" && git push 
+
 
 do:
 	@echo "What is your age?: "; \
