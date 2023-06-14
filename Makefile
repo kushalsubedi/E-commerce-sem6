@@ -26,7 +26,7 @@ push:
 	@echo "Enter your branch name: ";\
 	read branch_name ;\
 	git branch $$branch_name && git checkout $$branch_name &&\
-	git add . && git commit -m "update" && git push 
+	git add . && git commit -m "update" && git push --set-upstream origin $$branch_name
 
 do:
 	@echo "What is your age?: "; \
