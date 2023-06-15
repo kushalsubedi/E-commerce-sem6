@@ -16,6 +16,7 @@ def create_Product(request):
             product= form.save(commit=False)
             product.author = request.user
             product.save()
+            print(form.cleaned_data)
             return redirect('product_detail', pk=product.pk)
     else:
         form = ProductForm()

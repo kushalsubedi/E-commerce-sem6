@@ -11,7 +11,7 @@ dev-init:
 	npm install -D tailwindcss &&\
 	cd src && pip install -r requirements.txt 
 endif
-
+activate:
 installs:
 	npm install &&\
 	cd src && pip install -r requirements.txt
@@ -22,6 +22,7 @@ collectstatic:
 
 run:
 	@echo "!!!!! running Python server ... !!!!!"
+	
 	cd src && python manage.py runserver
 
 initial-push:
@@ -34,5 +35,11 @@ push:
 	@echo "Enter your commit message seperated by _ ";\
 	read commit ;\
 	git add . && git commit -m $$commit && git push 
+migrations:
+	cd src && python manage.py makemigrations && python manage.py migrate
+migrate:
+	cd src && python manage.py migrate
+superuser:
+	cd src && python manage.py createsuperuser
 
 

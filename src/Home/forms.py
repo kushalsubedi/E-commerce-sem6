@@ -4,7 +4,7 @@ input_css_class = 'form-control'
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['category','name','body','image']
+        fields = ['category','name','body','price','image']
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # self.fields['name'].widget.attrs['placeholder'] = "Your name"

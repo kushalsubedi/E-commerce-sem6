@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
 {{form.as_p}}
 <!-- create tailwind submit button -->
-<button type="submit" class="btn-submit mt-2">Submit</button>
+<input type="submit" value="Submit" class="btn-submit">
 </form>
 
 {% endblock %}
