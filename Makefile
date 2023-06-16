@@ -11,7 +11,7 @@ dev-init:
 	npm install -D tailwindcss &&\
 	cd src && pip install -r requirements.txt 
 endif
-activate:
+
 installs:
 	npm install &&\
 	cd src && pip install -r requirements.txt
@@ -37,9 +37,23 @@ push:
 	git add . && git commit -m $$commit && git push 
 migrations:
 	cd src && python manage.py makemigrations && python manage.py migrate
-migrate:
-	cd src && python manage.py migrate
+
 superuser:
 	cd src && python manage.py createsuperuser
+
+clean:
+	cd src &&\
+	rm -rf db.sqlite3 &&\
+	rm -rf */__pycache__/ &&\
+	rm -rf */**/__pycache__/ &&\
+	rm -rf */migrations/*_initial.py &&\
+	rm -rf */migrations/00*_*.py 
+
+
+
+
+	
+
+
 
 

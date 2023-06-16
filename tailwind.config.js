@@ -6,7 +6,11 @@ module.exports = {
     "./src/**/forms.py",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'fontawesome': ['Font Awesome 5 Free']
+      }
+    }
   },
   plugins: [
       require('flowbite/plugin')
