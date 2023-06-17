@@ -1,19 +1,19 @@
+SHELL = /bin/bash
 ifeq ($(OS),Windows_NT)
-dev-init:
+env:
 	virtualenv venv &&\
-	venv\Scripts\activate &&\
+	@echo "!!!!! Please activate virtual environment by running Scripts\venv\activate and run make installs !!!!!" &&\
 	npm install -D tailwindcss &&\
-	cd src && pip install -r requirements.txt 
+	
 else
-dev-init:
-	virtualenv venv &&\
-	/bin/bash -c "source venv/bin/activate" &&\
-	npm install -D tailwindcss &&\
-	cd src && pip install -r requirements.txt 
+env:
+	virtualenv venv &&\	
+	@echo "!!!!! Please activate virtual environment by running 'source venv/bin/activate' and run make installs !!!!!"
+
 endif
 
 installs:
-	npm install &&\
+	npm install -D tailwindcss &&\
 	cd src && pip install -r requirements.txt
 build-css:
 	npm run build:css
@@ -22,7 +22,7 @@ collectstatic:
 
 run:
 	@echo "!!!!! running Python server ... !!!!!"
-	
+	/bin/bash -c "source venv/bin/activate" &&\
 	cd src && python manage.py runserver
 
 initial-push:
@@ -52,8 +52,12 @@ clean:
 
 
 
-	
+activate:
+	@echo "Activating virtual environment ..."; \
+	source venv/bin/activate
 
 
-
-
+app:
+	@echo "Enter your app name: ";\
+	read app_name ;\
+	cd src && python manage.py startapp $$app_name

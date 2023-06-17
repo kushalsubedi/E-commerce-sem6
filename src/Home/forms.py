@@ -10,3 +10,11 @@ class ProductForm(forms.ModelForm):
         # self.fields['name'].widget.attrs['placeholder'] = "Your name"
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = input_css_class
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model =category
+        fields=['name']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = input_css_class
