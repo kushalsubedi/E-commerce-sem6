@@ -17,6 +17,14 @@ class Product(models.Model):
     body = models.TextField(max_length=50000)
     image = models.ImageField(upload_to='images/',null=True,blank=True)
 
+    @property 
+    def imageURL(self):
+        try:
+            url=self.image.url
+        except:
+            url=''
+        return url
+
     def __str__(self):
         return self.name
     def summary(self):
@@ -25,37 +33,13 @@ class Product(models.Model):
     def pub_date_pretty(self):
         return self.created_at.strftime('%b %e %Y')
     
-class Customer(models.Model):
-    user=models.OneToOneField(User,null=True,blank=True,on_delete=models.CASCADE)
-    name=models.CharField(max_length=200,null=True)
-    email=models.CharField(max_length=200,null=True)
-    def __str__(self):
-        return self.name
 
-class Order (models.Model):
-    customer=models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
-    date_ordered = models.DateTimeField(auto_now_add=True)
-    complete = models.BooleanField(default=False,null=True,blank=True)
-    transaction_id=models.CharField(max_length=120,null=True)
+
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    total_price = models.FloatField()
 
     def __str__(self):
-        return str(self.id)
+        return "{} ({})".format(self.product.name, self.quantity)
 
-
-class OrderItem(models.Model):
-    product=models.ForeignKey(Product,on_delete=models.SET_NULL,blank=True,null=True)
-    order=models.ForeignKey(Order,on_delete=models.SET_NULL,blank=True,null=True)
-    quantity=models.IntegerField(default=0,null=True,blank=True)
-    date_added=models.DateTimeField(auto_now_add=True)
-    
-class shippingAddress(models.Model):
-    customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,blank=True,null=True)
-    order = models.ForeignKey(Order,on_delete=models.SET_NULL,blank=True,null=True)
-    address = models.CharField(max_length=200,null=True,blank=True)
-    city=models.CharField(max_length=200,null=True)
-    state=models.CharField(max_length=200,null=True)
-    zipcode=models.CharField(max_length=200,null=True)
-    date_added =models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.address

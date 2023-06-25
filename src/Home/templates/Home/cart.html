@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    cart
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Shopping Cart</h1>
+
+    {% for cart_item in cart_items %}
+        <p>
+            {{ cart_item.product.name }} ({{ cart_item.quantity }})
+            <br>
+            {{ cart_item.total_price }}
+        </p>
+    {% endfor %}
+
+    <a href="{% url 'cart_add' product.id %}">Add to Cart</a>
+    <a href="{% url 'cart_remove' product.id %}">Remove from Cart</a>
+{% endblock %}

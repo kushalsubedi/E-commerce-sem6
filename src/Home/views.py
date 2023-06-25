@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404,HttpResponse
 from django.http import HttpResponseNotFound
 
 from .forms import ProductForm,CategoryForm
-from .models import Product,category,Order,OrderItem,shippingAddress,Customer
+from .models import Product,category,CartItem
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -82,13 +82,19 @@ def delete_product(request,pk):
         return HttpResponse("<h1> You are not allowed to delete this product </h1>",status=403)
 
 
-def cart(request):
-    if request.user.is_authenticated:
-        customer=request.user.Customer
-        order,created=Order.objects.get_or_create(Customer=Customer,complete=False)
-        items=order.orderitem_set.all()
-    else:
-        items=[]
-        order={'get_cart_total':0,'get_cart_items':0}
-        
-    return render(request,'Home/cart.html')
+def cart_view(request, product_id):
+    product = Product.objects.get(id=product_id)
+
+    if request.method == "POST":
+        quantity = int(request.POST["quantity"])
+        cart_item, created = CartItem.objects.get_or_create(product=product)
+        cart_item.quantity = quantity
+        cart_item.save()
+
+        return redirect("cart")
+
+    cart_items = CartItem.objects.filter(user=request.user)
+    return render(request, "cart.html", {"cart_items": cart_items})
+
+
+
