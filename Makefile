@@ -22,7 +22,7 @@ collectstatic:
 
 run:
 	@echo "!!!!! running Python server ... !!!!!"
-	/bin/bash -c "source venv/bin/activate" &&\
+	/bin/bash -c "source env/bin/activate" &&\
 	cd src && python manage.py runserver
 
 initial-push:

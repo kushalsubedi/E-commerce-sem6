@@ -10,8 +10,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 # Create your views here.
 
 def home(request):
-    if request.user.is_authenticated:
-        Customer=request.user
+ 
 
 
     product=Product.objects.all()
@@ -82,19 +81,19 @@ def delete_product(request,pk):
         return HttpResponse("<h1> You are not allowed to delete this product </h1>",status=403)
 
 
-def cart_view(request, product_id):
-    product = Product.objects.get(id=product_id)
+# def cart_view(request, product_id):
+#     product = Product.objects.get(id=product_id)
 
-    if request.method == "POST":
-        quantity = int(request.POST["quantity"])
-        cart_item, created = CartItem.objects.get_or_create(product=product)
-        cart_item.quantity = quantity
-        cart_item.save()
+#     if request.method == "POST":
+#         quantity = int(request.POST["quantity"])
+#         cart_item, created = CartItem.objects.get_or_create(product=product)
+#         cart_item.quantity = quantity
+#         cart_item.save()
 
-        return redirect("cart")
+#         return redirect("cart")
 
-    cart_items = CartItem.objects.filter(user=request.user)
-    return render(request, "cart.html", {"cart_items": cart_items})
+#     cart_items = CartItem.objects.filter(user=request.user)
+#     return render(request, "cart.html", {"cart_items": cart_items})
 
 
 
