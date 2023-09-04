@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404,HttpResponse
 from django.http import HttpResponseNotFound
 
 from .forms import ProductForm,CategoryForm
-from .models import Product,category,CartItem
+from .models import Product,category,Cart
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
@@ -10,12 +10,13 @@ from django.contrib.admin.views.decorators import staff_member_required
 # Create your views here.
 
 def home(request):
- 
-
-
+    user = request.user
     product=Product.objects.all()
-
-    return render(request,'Home/index.html',{'product':product})
+    context = {
+        'product':product,
+        'user':user
+    }
+    return render(request,'Home/index.html',context)
 
 
 def create_category(request):
@@ -81,19 +82,30 @@ def delete_product(request,pk):
         return HttpResponse("<h1> You are not allowed to delete this product </h1>",status=403)
 
 
-# def cart_view(request, product_id):
-#     product = Product.objects.get(id=product_id)
+def add_to_cart(request,pk):
+    if request.user.is_authenticated:
+        product = get_object_or_404(Product, pk=pk)
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart.products.add(product)
+        #cart.total_price += product.price  # Update the total price
+        cart.save()
+        print(f"Added to cart: {product.name} (ID: {product.id})")
+    else:
+        print("User is not authenticated. Cannot add to cart.")
 
-#     if request.method == "POST":
-#         quantity = int(request.POST["quantity"])
-#         cart_item, created = CartItem.objects.get_or_create(product=product)
-#         cart_item.quantity = quantity
-#         cart_item.save()
+    return redirect('home')
 
-#         return redirect("cart")
+def cart(request):
+    if request.user.is_authenticated:
+        try:
+            cart = Cart.objects.get(user=request.user)
+        except Cart.DoesNotExist:  # Catch the Cart.DoesNotExist exception
+            cart = None  # Set cart to None when no cart is available
 
-#     cart_items = CartItem.objects.filter(user=request.user)
-#     return render(request, "cart.html", {"cart_items": cart_items})
+        context = {
+            'cart': cart
+        }
 
-
-
+        return render(request, 'Home/cart.html', context)
+    else :
+        return render (request,'Home/404.html',{'status':404})

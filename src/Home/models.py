@@ -34,12 +34,8 @@ class Product(models.Model):
         return self.created_at.strftime('%b %e %Y')
     
 
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product)
 
-class CartItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
-    total_price = models.FloatField()
-
-    def __str__(self):
-        return "{} ({})".format(self.product.name, self.quantity)
 

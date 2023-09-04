@@ -54,7 +54,7 @@ clean:
 
 activate:
 	@echo "Activating virtual environment ..."; \
-	source venv/bin/activate
+	zsh -C "source env/bin/activate"
 
 
 app:
