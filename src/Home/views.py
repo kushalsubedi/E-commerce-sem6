@@ -87,3 +87,13 @@ def delete_product(request, pk):
         return redirect('home')
     else:
         return HttpResponse("<h1> You are not allowed to delete this product </h1>", status=403)
+
+
+
+#test 
+
+
+
+
+
+
