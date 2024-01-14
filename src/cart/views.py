@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect
-from .models import Cart
+from .models import Cart, Order
 from Home.models import Product
-
+from datetime import datetime
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -34,7 +35,7 @@ def cart(request):
             cart = Cart.objects.get(user=request.user)
         except Cart.DoesNotExist:  # Catch the Cart.DoesNotExist exception
             cart = None  # Set cart to None when no cart is available
-
+    
         context = {
             'cart': cart
         }
@@ -60,3 +61,17 @@ def cart_updates(request,pk):
         print(f"{product.name} is in cart.")
         return redirect('cart')
     return redirect('home')
+
+
+
+def create_order (request):
+    if request.user.is_authenticated:
+        cart = Cart.objects.get(user=request.user)
+        order = Order(user=request.user, total=cart.get_total())
+        order.save()
+        order.products.set(cart.products.all())
+        order.save()
+        order.update_products()
+        cart.products.clear()
+        cart.save()
+        return HttpResponse("Order created")
