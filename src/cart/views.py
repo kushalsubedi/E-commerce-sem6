@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect
-from .models import Cart, Order
+from .models import Cart
+from orders.models import Order
 from Home.models import Product
 from datetime import datetime
 from django.http import HttpResponse
