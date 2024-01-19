@@ -132,24 +132,23 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
-
-
-# Define where to collect static files
-MEDIA_ROOT = BASE_DIR / "static"/"media"
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = "/media/"
-
-
-COMPRESS_ROOT = BASE_DIR / 'static'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
 
 COMPRESS_ENABLED = True
 
 STATICFILES_FINDERS = [
-    'compressor.finders.CompressorFinder',
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-]
+            'compressor.finders.CompressorFinder',
+                'django.contrib.staticfiles.finders.FileSystemFinder',
+                    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+                    ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

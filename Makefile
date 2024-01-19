@@ -23,7 +23,7 @@ collectstatic:
 run:
 	@echo "!!!!! running Python server ... !!!!!"
 	/bin/bash -c "source env/bin/activate" &&\
-		cd src && python manage.py runserver 0.0.0.0:8000
+		cd src &&  gunicorn core.wsgi 
 
 initial-push:
 
